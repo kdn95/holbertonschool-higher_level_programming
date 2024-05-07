@@ -5,4 +5,4 @@ def islower(c):
     elif c >= chr(65) and c <= chr(90):
         return False
     else:
-        continue
+        return False
