@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-list = []
-str = ""
-for i in range(97, 123):
-    list.append(chr(i))
-alphabet = str.join(list)
-print("{}".format(alphabet))
+str = "abcdefghijklmnopqrstuvwxyz"
+for i in range(len(str)-1):
+    str[i-1]
+print("{}".format(str), end="")
