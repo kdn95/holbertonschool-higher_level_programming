@@ -1,4 +1,6 @@
 #!/usr/bin/python3
 def print_list_integer(my_list=[]):
-    for digit in range(1, len(my_list) + 1):
-        print("{:d}".format(digit))
+    counter = 1
+    for digit in my_list:
+        if isinstance(digit, int):
+            print("{:d}".format(digit))
