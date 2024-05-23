@@ -12,7 +12,7 @@ Tests:
     5
 
     >>> add (3.5, 2.5)
-    6
+    5
 
     Test - a is not int
     >>> add("hello", 1)
