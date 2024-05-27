@@ -1,16 +1,17 @@
 #!/usr/bin/python3
-""" Module for Rectangle class"""
+""" Module for Rectangle class. """
 
 
 class Rectangle:
     """
-    Rectangle class with attributes
+    Representation of a Rectangle.
     """
 
-    def __init__(self, width=0, height=0)
+    def __init__(self, width=0, height=0):
         """ initialization """
         self.width = width
         self.height = height
+
     @property
     def width(self):
         """ width of the Rectangle """
@@ -46,4 +47,13 @@ class Rectangle:
         if value < 0:
             raise ValueError("height must be >= 0")
         self.__height = value
-    
+
+    def area(self):
+        """ Returns the area of the Rectangle """
+        return self.__width * self.__height
+
+    def perimeter(self):
+        """ Returns the area of the Rectangle """
+        if not self.__width or not self.__height:
+            return 0
+        return (self.__width + self.__height) * 2
