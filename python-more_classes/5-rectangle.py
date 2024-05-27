@@ -1,20 +1,20 @@
 #!/usr/bin/python3
-""" Module for Rectangle class"""
+""" Module for Rectangle class. """
 
 
 class Rectangle:
     """
-    Rectangle class with attributes
+    Representation of a Rectangle.
     """
 
     def __init__(self, width=0, height=0):
-        """initialization"""
+        """ initialization """
         self.width = width
         self.height = height
 
     @property
     def width(self):
-        """width of the Rectangle """
+        """ width of the Rectangle """
         return self.__width
 
     @width.setter
@@ -47,3 +47,27 @@ class Rectangle:
         if value < 0:
             raise ValueError("height must be >= 0")
         self.__height = value
+
+    def area(self):
+        """ Returns the area of the Rectangle """
+        return self.__width * self.__height
+
+    def perimeter(self):
+        """ Returns the area of the Rectangle """
+        if not self.__width or not self.__height:
+            return 0
+        return (self.__width + self.__height) * 2
+
+    def __str__(self):
+        """ Returns string representation with '#' """
+        if not self.__width or not self.__height:
+            return ""
+        return (("#" * self.__width + '\n') * self.height)[:-1]
+
+    def __repr__(self):
+        """ Returns formal string representation """
+        return "Rectangle(" + str(self.width) + ", " + str(self.height) + ")"
+
+    def __del__(self):
+        """ Destructor """
+        print("Bye rectangle...")
