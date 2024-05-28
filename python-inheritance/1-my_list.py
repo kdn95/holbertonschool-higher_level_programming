@@ -3,6 +3,7 @@
 A class called MyList that inherits from list
 """
 
+
 class MyList(list):
     """
     Subclass of built-in list
