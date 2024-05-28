@@ -1,0 +1,11 @@
+The ``my_list`` module
+
+Using ``my_list``
+
+import ``MyList`` from ``1-my_list`` file:
+
+    >>> MyList = __import__('1-my_list').MyList
+
+Tests:
+
+    Test 
