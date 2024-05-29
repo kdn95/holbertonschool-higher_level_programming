@@ -5,6 +5,6 @@
 def read_file(filename=""):
     """Function read_file"""
 
-    with open('my_file_0.txt', encoding='UTF8') as a_file:
+    with open(filename, encoding='UTF8') as a_file:
         for line in a_file:
             print("{}".format(line), end='')
