@@ -47,3 +47,5 @@ class CustomObject:
                 return pickle.load(r_file)
         except FileNotFoundError:
             print("File not found")
+
+        return None
