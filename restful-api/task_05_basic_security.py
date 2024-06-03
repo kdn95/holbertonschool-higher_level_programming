@@ -13,7 +13,7 @@ jwt = JWTManager(app)
 
 users = {
     "User1": {
-        "Sam":"user1",
+        "username":"user1",
         "password": generate_password_hash("hello"),
         "role": "user"
         },
@@ -50,19 +50,19 @@ def login():
     return jsonify({"access_token": access_token})
 
 
-@app.route("/basic-protected", methods=["GET"])
+@app.route("/basic-protected", methods=["GET"], endpoint='basic_protected')
 @auth.login_required
 def basic_protected():
     return "Basic Auth: Access Granted"
 
 
-@app.route("/jwt-protected", methods=["GET"])
+@app.route("/jwt-protected", methods=["GET"], endpoint='jwt_protected')
 @jwt_required
 def jwt_protected():
     return "JWT Auth: Access Granted"
 
 
-@app.route("/admin-only", methods=["GET"])
+@app.route("/admin-only", methods=["GET"], endpoint='admin_only')
 @jwt_required
 def admin_only():
     current_usr = get_jwt_identity()
