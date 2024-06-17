@@ -20,7 +20,7 @@ def matrix_divided(matrix, div):
         raise TypeError("div must be a number")
     if div == 0:
         raise ZeroDivisionError("division by zero")
-    if not isinstance(matrix, list) or not matrix or not all(isinstance(row, list) for row in matrix):
+    if not (isinstance(matrix, list) and all(isinstance(row, list) for row in matrix)):
         raise TypeError(error_mes)
     for row in matrix:
         if not row or not all(isinstance(num, (int, float)) for num in row):
