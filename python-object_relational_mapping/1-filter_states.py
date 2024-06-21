@@ -26,4 +26,4 @@ if __name__ == "__main__":
     rows = cur.fetchall()
 # Returns list of tuples. Each tuple is a row from the result set of the query
     for row in rows:
-        print("({0}, {1})".format(row[0], row[1]))
+        print("({0}, '{1}')".format(row[0], row[1]))
