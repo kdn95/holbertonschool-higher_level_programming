@@ -1,5 +1,8 @@
 #!/usr/bin/python3
-"""List all states that start with the uppercase letter N"""
+"""Display all states  where name
+    matches the argument now with prevention
+    of SQL injection
+"""
 
 
 if __name__ == "__main__":

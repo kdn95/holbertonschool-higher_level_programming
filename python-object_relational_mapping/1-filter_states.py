@@ -20,8 +20,7 @@ if __name__ == "__main__":
     cur.execute("""SELECT *
                 FROM states
                 WHERE name LIKE 'N%'
-                ORDER BY id ASC
-                LIMIT 2""")
+                ORDER BY id ASC""")
 # fetchall() retrieves all rows returned from SQL query in execute()
     rows = cur.fetchall()
 # Returns list of tuples. Each tuple is a row from the result set of the query
