@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Print all City objs
+"""Nameless module to suck data out from the database
 """
 import sys
 from model_state import Base, State
