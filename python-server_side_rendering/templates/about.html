@@ -1,22 +1,38 @@
-<!-- Start off with standard html template -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <style>
+        html, body {
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            color: blue;
+            text-shadow: 2px 2px 5px #666;
+            font-size: 48px;
+        }
+
+        footer {
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            text-align: center;
+            border-top: 1px solid #CCC;
+        }
+
+        body > ul {
+            width: 240px;
+            margin: 0 auto;
+            text-align: left;
+        }
+    </style>
+    <title>My Flask App - About Us</title>
 </head>
 <body>
-<!-- Added header html here -->
-{% include "header.html" %}
-<h1>About</h1>
-<p>This is about Me, Myself and I.</p>
-<ul>
-    <li>Me</li>
-    <li>Myself</li>
-    <li>I</li>
-</ul>
-<!-- Added footer html here -->
-{% include "footer.html" %}
+    {% include 'header.html' %}
+    <h1>This is the 'About Us' page</h1>
+    {% include 'footer.html' %}
 </body>
 </html>

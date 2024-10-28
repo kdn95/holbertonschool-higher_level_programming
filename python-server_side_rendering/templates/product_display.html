@@ -3,28 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>My Flask App - Task 03</title>
+    <style>
+        html, body {
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        body > .main {
+            background-color: #99FFFF;
+            padding: 20px 0 40px 0;
+        }
+
+        body > .main table{
+            width: 350px;
+            margin: 0 auto;
+            border-spacing: 0;
+            background-color: #FFF;
+            border: 1px solid #CCC;
+        }
+
+        body > .main table > thead td {
+            font-weight: bold;
+            border-bottom: 1px solid #CCC;
+        }
+
+        body > .main table td{
+            padding: 5px;
+        }
+
+        header {
+            color: blue;
+            text-shadow: 2px 2px 5px #666;
+            font-size: 48px;
+        }
+
+        footer {
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            text-align: center;
+            border-top: 1px solid #CCC;
+        }
+    </style>
 </head>
 <body>
-    <table>
-        <caption>Products</caption>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Category</th>
-                <th>Price</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for product in data %}
-            <tr>
-                <td>{{ product.name }}</td>
-                <td>{{ product.category }}</td>
-                <td>{{ product.price }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    
+    {% include 'header.html' %}
+    <h1>Products table</h1>
+    <div class="main">
+        <h2>List of items</h2>
+        <table>
+            <thead>
+                <tr>
+                    <td>Id</td>
+                    <td>Name</td>
+                    <td>Category</td>
+                    <td>Price</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                <tr>
+                    <td>{{row["id"]}}</td>
+                    <td>{{row["name"]}}</td>
+                    <td>{{row["category"]}}</td>
+                    <td>{{row["price"]}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if source not in ['json', 'csv'] %}
+        <h1>Wrong source</h1>
+        {% endif %}
+        {% if id and data|length == 0 %}
+        <h1>Product not found</h1>
+        {% endif %}
+    </div>
+    {% include 'footer.html' %}
 </body>
 </html>

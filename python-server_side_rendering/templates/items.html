@@ -3,17 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Items</title>
+    <title>My Flask App - Items List</title>
+    <style>
+        html, body {
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        body > ul {
+            width: 400px;
+            margin: 0 auto;
+            background-color: #99FFFF;
+            padding: 20px 0 40px 0;
+        }
+
+        body > ul > li {
+            padding: 10px;
+            margin: 10px;
+            background-color: #FFC;
+            box-shadow: 3px 3px 3px #666;
+            border-radius: 5px;
+            border: 1px solid #999;
+            list-style: none;
+        }
+
+        header {
+            color: blue;
+            text-shadow: 2px 2px 5px #666;
+            font-size: 48px;
+        }
+
+        footer {
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            text-align: center;
+            border-top: 1px solid #CCC;
+        }
+    </style>
 </head>
 <body>
-    {% if items %}
+    {% include 'header.html' %}
+    <h1>Welcome to SSR!</h1>
     <ul>
-    {% for item in items%}
-        <li> {{item}} </li>
-    {% endfor %}
+        <h2>List of items</h2>
+        {% if items|length == 0 %}
+            No items found
+        {% else %}
+            {% for item in items %}
+            <li>{{item}}</li>
+            {% endfor %}
+        {% endif %}
     </ul>
-    {% else %}
-        No items found
-    {% endif %}
+    {% include 'footer.html' %}
 </body>
 </html>
