@@ -11,10 +11,12 @@ app = Flask(__name__)
 JSON_PATH = 'products.json'
 CSV_PATH = 'products.csv'
 
+
 # read & parse json file function
 def read_json(file_path):
     with open(file_path, 'r') as file:
         return json.load(file)
+
 
 # read & parse csv file function
 def read_csv(file_path):
@@ -22,9 +24,11 @@ def read_csv(file_path):
         reader = csv.DictReader(file)
         return list(reader)
 
+
 @app.route('/')
 def home():
     return render_template('index.html')
+
 
 @app.route('/items')
 def items():
@@ -32,10 +36,11 @@ def items():
 
     with open("items.json", 'r') as f:
         rows = json.load(f)
-    for key,value in rows.items():
+    for key, value in rows.items():
         items_list = value
 
     return render_template('items.html', items=items_list)
+
 
 @app.route('/products')
 def get_data():
@@ -44,7 +49,7 @@ def get_data():
     id = request.args.get('id')
     if source not in ['json', 'csv']:
         return jsonify({"error": "wrong source"}), 400
-    
+
     # Read data from the corresponding file
     if source == 'json':
         data = read_json(JSON_PATH)
@@ -56,18 +61,21 @@ def get_data():
             create_sql_data(sql_filepath)
 
         data = load_sql_data(sql_filepath, id)
-    
+
     # Filter data by ID if provided
     if id:
         filtered_data = [item for item in data if str(item['id']) == id]
     else:
         filtered_data = data
 
-    return render_template("product_display.html", data=filtered_data, source=source, id=id)
+    return render_template("product_display.html",
+                           data=filtered_data,
+                           source=source,
+                           id=id
+                           )
 
 
-
-def load_sql_data(filename, wanted_id = None):
+def load_sql_data(filename, wanted_id=None):
     """ Load SQLite data and return as dictionary """
 
     data = []
@@ -98,6 +106,7 @@ def load_sql_data(filename, wanted_id = None):
     # print(data)
 
     return data
+
 
 def create_sql_data(filename):
     """ Create SQLite data file if it doesn't already exist """

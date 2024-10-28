@@ -5,11 +5,13 @@ import json
 # Create an instance for Flask
 app = Flask(__name__)
 
+
 # Create home page
 @app.route('/')
 def home():
     """ Use render_template function to return index.html """
     return render_template('index.html')
+
 
 @app.route('/items')
 def items():
