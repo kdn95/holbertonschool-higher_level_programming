@@ -1,34 +1,16 @@
 #!/usr/bin/python3
-from flask import Flask, render_template, request, jsonify
+
+from flask import Flask, render_template, request
 from pathlib import Path
 import json
 import csv
 import sqlite3
 
-# Create an instance for Flask
 app = Flask(__name__)
-# path to data files
-JSON_PATH = 'products.json'
-CSV_PATH = 'products.csv'
-
-
-# read & parse json file function
-def read_json(file_path):
-    with open(file_path, 'r') as file:
-        return json.load(file)
-
-
-# read & parse csv file function
-def read_csv(file_path):
-    with open(file_path, 'r') as file:
-        reader = csv.DictReader(file)
-        return list(reader)
-
 
 @app.route('/')
 def home():
     return render_template('index.html')
-
 
 @app.route('/items')
 def items():
@@ -36,46 +18,78 @@ def items():
 
     with open("items.json", 'r') as f:
         rows = json.load(f)
-    for key, value in rows.items():
+    for key,value in rows.items():
         items_list = value
 
     return render_template('items.html', items=items_list)
 
-
 @app.route('/products')
-def get_data():
-    # Check 'source' query parameter using request args
+def products():
     source = request.args.get('source')
     id = request.args.get('id')
-    if source not in ['json', 'csv']:
-        return jsonify({"error": "wrong source"}), 400
 
-    # Read data from the corresponding file
-    if source == 'json':
-        data = read_json(JSON_PATH)
-    elif source == 'csv':
-        data = read_csv(CSV_PATH)
+    data = []
+    if source == "json":
+        data = load_json_data("products.json", id)
+    elif source == "csv":
+        data = load_csv_data("products.csv", id)
     elif source == "sql":
         sql_filepath = "products.db"
+        # create sqlite file if it doesn't exist yet
         if not Path(sql_filepath).is_file():
             create_sql_data(sql_filepath)
 
         data = load_sql_data(sql_filepath, id)
 
-    # Filter data by ID if provided
-    if id:
-        filtered_data = [item for item in data if str(item['id']) == id]
-    else:
-        filtered_data = data
+    return render_template('product_display.html', data=data, source=source, id=id)
 
-    return render_template("product_display.html",
-                           data=filtered_data,
-                           source=source,
-                           id=id
-                           )
+def load_json_data(filename, wanted_id = None):
+    """ Load JSON data from file and returns as dictionary """
 
+    data = []
 
-def load_sql_data(filename, wanted_id=None):
+    if not Path(filename).is_file():
+        raise FileNotFoundError("Data file '{}' missing".format(filename))
+
+    try:
+        with open(filename, 'r') as f:
+            rows = json.load(f)
+
+        for row in rows:
+            # Typecast!!!!!!!
+            key = str(row['id'])
+
+            if (wanted_id is not None and key == wanted_id) or (wanted_id is None):
+                product = {}
+                for k,v in row.items():
+                    product[k] = v
+                data.append(product)
+
+    except ValueError as exc:
+        raise ValueError("Unable to load data from file '{}'".format(filename)) from exc
+
+    return data
+
+def load_csv_data(filename, wanted_id = None):
+    """ Load JSON data from file and returns as dictionary """
+
+    data = []
+
+    if not Path(filename).is_file():
+        raise FileNotFoundError("Data file '{}' missing".format(filename))
+
+    try:
+        with open(filename, 'r') as csvfile:
+            # using DictReader method to convert each row to a dictionary
+            for row in csv.DictReader(csvfile):
+                if (wanted_id is not None and row['id'] == wanted_id) or (wanted_id is None):
+                    data.append(row)
+    except ValueError as exc:
+        raise ValueError("Unable to load data from file '{}'".format(filename)) from exc
+
+    return data
+
+def load_sql_data(filename, wanted_id = None):
     """ Load SQLite data and return as dictionary """
 
     data = []
@@ -107,7 +121,6 @@ def load_sql_data(filename, wanted_id=None):
 
     return data
 
-
 def create_sql_data(filename):
     """ Create SQLite data file if it doesn't already exist """
 
@@ -122,5 +135,6 @@ def create_sql_data(filename):
     con.commit()
 
 
+# Set debug=True for the server to auto-reload when there are changes
 if __name__ == '__main__':
     app.run(host='localhost', port=5000, debug=True)
